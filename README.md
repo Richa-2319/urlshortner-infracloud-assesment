@@ -10,7 +10,9 @@ simple in-memory url shortner assesment for infracloud
 - How to run this project
   - Once the project is build jar will be created
   - Execute jar using command : `
-   java -jar build/libs/shorturl-0.0.1-SNAPSHOT.jar
+   java -jar build/libs/shorturl-0.0.1-SNAPSHOT.jar`
+    - Alternate way using docker container
+    `docker-compose up -d --build`
 
 * API curl samples for testing 
   * For generating short url:
