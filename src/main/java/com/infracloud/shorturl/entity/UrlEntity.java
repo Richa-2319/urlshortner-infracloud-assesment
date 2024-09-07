@@ -28,6 +28,10 @@ public class UrlEntity {
         return shortUrl;
     }
 
+    public String getDomain() {
+        return domain;
+    }
+
     public UrlEntity(String longUrl, String shortUrl, String domain) {
         this.longUrl = longUrl;
         this.shortUrl = shortUrl;
