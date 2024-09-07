@@ -2,7 +2,7 @@
 simple in-memory url shortner assesment for infracloud
 
 - Prerequisite to run this project 
-  - System should have preinstalled Java 17
+  - System should have preinstalled Java 17 if running jar
 
 - How to build this project 
   - Run the command from root dir: `./gradlew clean build`
