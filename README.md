@@ -37,9 +37,9 @@ simple in-memory url shortner assesment for infracloud
 }
 '`
     * Expected Response: `[
-    "www.google.co.in (1)"
+    "www.google.co.in : 1"
 ]`
 
 ## Application Image is available on DockerHub
   * Simply use this command to run this application in your local
-    `docker run vivekvikash/urlshortner`
+    `docker run -p 8080:8080 vivekvikash/urlshortner`
