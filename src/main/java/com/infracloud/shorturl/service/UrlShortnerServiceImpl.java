@@ -32,20 +32,13 @@ public class UrlShortnerServiceImpl implements UrlShortnerService{
         }
     }
 
-    private boolean isValidUrl(String url) {
-        // Implement URL validation logic
-        String urlRegex = "^(https?://)?([\\da-z\\.-]+)\\.([a-z\\.]{2,6})([-\\w \\./&%#=]*)*/?$";
-        return url.matches(urlRegex);
-    }
-
     @Override
     public UrlResponse shortenUrl(String longUrl) {
 
-//        if (!isValidUrl(longUrl)) {
-//            throw new IllegalArgumentException("Invalid URL format");
-//        }
-
         String domain = extractDomain(longUrl);
+        if(domain == null || domain.isBlank()) {
+            throw new IllegalArgumentException("Invalid URL format");
+        }
         UrlEntity urlEntity = urlRepository.findByLongUrl(longUrl);
         if (urlEntity != null) {
             return UrlResponse.fromEntity(urlEntity);
@@ -72,7 +65,7 @@ public class UrlShortnerServiceImpl implements UrlShortnerService{
         List<Object[]> results = urlRepository.findTopRequestedDomains();
         return results.stream()
                 .limit(3) // Get top 3 domains
-                .map(result -> result[0] + " (" + result[1] + ")")
+                .map(result -> result[0] + " : " + result[1] )
                 .collect(Collectors.toList());
     }
 }

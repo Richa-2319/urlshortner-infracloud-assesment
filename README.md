@@ -26,9 +26,9 @@ simple in-memory url shortner assesment for infracloud
   * For checking redirection logic, from the above curl response will be 
   `{
     "longUrl": "https://www.google.co.in/search?q=india",
-    "shortUrl": "M1X4XZJ2"
+    "shortUrl": "http://localhost:8080/url/M1X4XZJ2"
 }`
-    * Copy the short url and make a url like `http://localhost:8080/url/M1X4XZJ2`. Put the url in browser it will be redirected to original.
+    * Copy the short url `http://localhost:8080/url/M1X4XZJ2`. Put the url in browser it will be redirected to original.
   * For getting the top 3 domain for which shorturl generated.
     `curl --location --request GET 'http://localhost:8080/url/top-domains' \
 --header 'Content-Type: application/json' \

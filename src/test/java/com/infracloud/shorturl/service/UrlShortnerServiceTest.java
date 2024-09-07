@@ -36,8 +36,9 @@ public class UrlShortnerServiceTest {
     public void shortenUrl_WhenUrlExists_ReturnsExistingUrlResponse() {
         // Given
         String longUrl = "http://example.com/some/long/url";
-        String shortUrl = "abc123";
-        UrlEntity existingUrlEntity = new UrlEntity(longUrl, shortUrl, "example.com");
+        String shortUrl = "http://localhost:8080/url/abc123";
+        String shortUrlLiteral = "abc123";
+        UrlEntity existingUrlEntity = new UrlEntity(longUrl, shortUrlLiteral, "example.com");
         when(urlRepository.findByLongUrl(longUrl)).thenReturn(existingUrlEntity);
 
         // When
@@ -55,9 +56,10 @@ public class UrlShortnerServiceTest {
     public void shortenUrl_WhenUrlDoesNotExist_CreatesNewUrlResponse() {
         // Given
         String longUrl = "http://example.com/some/long/url";
-        String shortUrl = "abc123";
+        String shortUrl = "http://localhost:8080/url/abc123";
+        String shortUrlLiteral = "abc123";
         when(urlRepository.findByLongUrl(longUrl)).thenReturn(null);
-        when(strategyContext.generateShortUrl(longUrl)).thenReturn(shortUrl);
+        when(strategyContext.generateShortUrl(longUrl)).thenReturn(shortUrlLiteral);
 
         // When
         UrlResponse response = urlShortnerService.shortenUrl(longUrl);
@@ -116,9 +118,9 @@ public class UrlShortnerServiceTest {
 
         // Then
         assertEquals(3, topDomains.size());
-        assertEquals("example.com (5)", topDomains.get(0));
-        assertEquals("anotherdomain.com (3)", topDomains.get(1));
-        assertEquals("yetanother.com (2)", topDomains.get(2));
+        assertEquals("example.com : 5", topDomains.get(0));
+        assertEquals("anotherdomain.com : 3", topDomains.get(1));
+        assertEquals("yetanother.com : 2", topDomains.get(2));
         verify(urlRepository, times(1)).findTopRequestedDomains();
     }
 }

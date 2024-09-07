@@ -1,5 +1,6 @@
 package com.infracloud.shorturl.dto;
 
+import com.infracloud.shorturl.constant.Constants;
 import com.infracloud.shorturl.entity.UrlEntity;
 import lombok.AllArgsConstructor;
 
@@ -37,7 +38,7 @@ public class UrlResponse {
     public static UrlResponse fromEntity(UrlEntity entity){
         UrlResponse response = new UrlResponse();
         response.setLongUrl(entity.getLongUrl());
-        response.setShortUrl(entity.getShortUrl());
+        response.setShortUrl(Constants.BASEAPPDOMAIN + entity.getShortUrl());
         return response;
     }
 }
