@@ -30,14 +30,12 @@ simple in-memory url shortner assesment for infracloud
 }`
     * Copy the short url `http://localhost:8080/url/M1X4XZJ2`. Put the url in browser it will be redirected to original.
   * For getting the top 3 domain for which shorturl generated.
-    `curl --location --request GET 'http://localhost:8080/url/top-domains' \
---header 'Content-Type: application/json' \
---data '{
-    "longUrl":"https://www.google.co.in/search?q=india"
-}
+    `curl --location --request GET 'http://localhost:8080/url/top-domains'
 '`
     * Expected Response: `[
-    "www.google.co.in : 1"
+    "www.google.co.in : 1",
+    "www.youtube.com : 1",
+    "www.wikipedia.com : 1"
 ]`
 
 ## Application Image is available on DockerHub
