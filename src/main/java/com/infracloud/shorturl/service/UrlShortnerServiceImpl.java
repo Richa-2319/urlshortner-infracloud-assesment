@@ -1,5 +1,6 @@
 package com.infracloud.shorturl.service;
 
+import com.infracloud.shorturl.constant.Constants;
 import com.infracloud.shorturl.dto.UrlResponse;
 import com.infracloud.shorturl.entity.UrlEntity;
 import com.infracloud.shorturl.repository.UrlRepository;
@@ -25,14 +26,24 @@ public class UrlShortnerServiceImpl implements UrlShortnerService{
     private String extractDomain(String url) {
         try {
             URI uri = new URI(url);
-            return uri.getHost(); // Extract the domain
+            return uri.getHost();
         } catch (URISyntaxException e) {
             throw new IllegalArgumentException("Invalid URL format");
         }
     }
 
+    private boolean isValidUrl(String url) {
+        // Implement URL validation logic
+        String urlRegex = "^(https?://)?([\\da-z\\.-]+)\\.([a-z\\.]{2,6})([-\\w \\./&%#=]*)*/?$";
+        return url.matches(urlRegex);
+    }
+
     @Override
     public UrlResponse shortenUrl(String longUrl) {
+
+//        if (!isValidUrl(longUrl)) {
+//            throw new IllegalArgumentException("Invalid URL format");
+//        }
 
         String domain = extractDomain(longUrl);
         UrlEntity urlEntity = urlRepository.findByLongUrl(longUrl);
