@@ -12,7 +12,6 @@ import lombok.Setter;
 
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
 public class UrlEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,5 +26,11 @@ public class UrlEntity {
 
     public String getShortUrl() {
         return shortUrl;
+    }
+
+    public UrlEntity(String longUrl, String shortUrl, String domain) {
+        this.longUrl = longUrl;
+        this.shortUrl = shortUrl;
+        this.domain = domain;
     }
 }
