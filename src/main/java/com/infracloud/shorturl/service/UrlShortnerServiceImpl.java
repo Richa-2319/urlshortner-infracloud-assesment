@@ -82,7 +82,7 @@ public class UrlShortnerServiceImpl implements UrlShortnerService{
         Set<Long> values = new HashSet<>();
         for(Object[] objectList : results){
             values.add((Long) objectList[1]);
-            if(values.size() <=3){
+            if(values.size() <=numberOfTopDomains){
                 finalresults.add(objectList);
             } else {
                 break;
