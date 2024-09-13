@@ -8,7 +8,10 @@ import com.infracloud.shorturl.service.strategy.StrategyContext;
 import org.springframework.stereotype.Service;
 
 import java.net.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,7 +29,20 @@ public class UrlShortnerServiceImpl implements UrlShortnerService{
     private String extractDomain(String url) {
         try {
             URI uri = new URI(url);
-            return uri.getHost();
+            String host = uri.getHost();
+
+            if(host == null || host.isBlank()) {
+                throw new IllegalArgumentException("Invalid URL format");
+            }
+
+            String[] domainVerbs = host.split("\\.");
+            StringBuilder sb = new StringBuilder();
+
+            sb.append(domainVerbs[domainVerbs.length-2]);
+            sb.append(".");
+            sb.append(domainVerbs[domainVerbs.length-1]);
+
+            return sb.toString();
         } catch (URISyntaxException e) {
             throw new IllegalArgumentException("Invalid URL format");
         }
@@ -36,9 +52,7 @@ public class UrlShortnerServiceImpl implements UrlShortnerService{
     public UrlResponse shortenUrl(String longUrl) {
 
         String domain = extractDomain(longUrl);
-        if(domain == null || domain.isBlank()) {
-            throw new IllegalArgumentException("Invalid URL format");
-        }
+
         UrlEntity urlEntity = urlRepository.findByLongUrl(longUrl);
         if (urlEntity != null) {
             return UrlResponse.fromEntity(urlEntity);
@@ -63,8 +77,18 @@ public class UrlShortnerServiceImpl implements UrlShortnerService{
     @Override
     public List<String> getTopRequestedDomains() {
         List<Object[]> results = urlRepository.findTopRequestedDomains();
-        return results.stream()
-                .limit(3) // Get top 3 domains
+        List<Object[]> finalresults = new ArrayList<>();
+        int numberOfTopDomains = 3;
+        Set<Long> values = new HashSet<>();
+        for(Object[] objectList : results){
+            values.add((Long) objectList[1]);
+            if(values.size() <=3){
+                finalresults.add(objectList);
+            } else {
+                break;
+            }
+        }
+        return finalresults.stream()
                 .map(result -> result[0] + " : " + result[1] )
                 .collect(Collectors.toList());
     }

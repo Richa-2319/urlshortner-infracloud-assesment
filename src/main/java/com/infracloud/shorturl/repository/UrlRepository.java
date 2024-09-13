@@ -11,6 +11,6 @@ public interface UrlRepository extends JpaRepository<UrlEntity,Long> {
     UrlEntity findByShortUrl(String shortUrl);
 
     @Query("SELECT u.domain, COUNT(u.domain) as count FROM UrlEntity u " +
-            "GROUP BY u.domain ORDER BY count DESC")
+            "GROUP BY u.domain ORDER BY count DESC, u.domain ASC")
     List<Object[]> findTopRequestedDomains();
 }
